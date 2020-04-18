@@ -14,6 +14,7 @@ source("BDE_all/BDE_analyze.R")
 DATA <- Soy_init_MT()
 
 ### Set BDE_parameters
+#source("BDE_all/BDE_parameters.R")
 source("BDE_all/BDE_check_parameters.R")
 OBJFUNC <- gbs_bglr_mt
 VALIDFUNC <- gbs_bglr_mt_valid
