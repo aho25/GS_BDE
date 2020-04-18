@@ -6,7 +6,7 @@ BDE_IG_16 <- function(PHENO, MARKERS) {
   PHENO.min <- min(PHENO) - 1
   PHENO.seq_16 <- (PHENO.max - PHENO.min) / 16
   #hist(PHENO, breaks = seq(PHENO.min, PHENO.max, PHENO.seq_16), col = 'orange')
-  PHENO.classes_16 <- cut(PHENO, breaks = seq(PHENO.min, PHENO.max, PHENO.seq_16), labels = letters[1:16])
+  PHENO.classes_16 <- cut(PHENO[,1], breaks = seq(PHENO.min, PHENO.max, PHENO.seq_16), labels = letters[1:16])
   MARKERS.classes_16 <- cbind(MARKERS, as.vector(PHENO.classes_16))
   colnames(MARKERS.classes_16) <- c(colnames(MARKERS), 'classes')
   MARKERS.classes_16 <- as.data.frame(MARKERS.classes_16)
