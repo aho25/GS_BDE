@@ -9,9 +9,9 @@ gbs_bglr_st <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
     splitdata <- split(order(runif(Markers.nRow))[-sample(Markers.nRow, Markers.nRow%%CROSSVAL)], 1:CROSSVAL)
   }
   fitness <- mcmapply(function(i) {
-    pheno_train <- PHENO[-splitdata[[i]]]
+    pheno_train <- PHENO[-splitdata[[i]],1]
     m_train <- as.matrix(MARKERS[-splitdata[[i]],])
-    pheno_test <- PHENO[splitdata[[i]]]
+    pheno_test <- PHENO[splitdata[[i]],1]
     m_test <- as.matrix(MARKERS[splitdata[[i]],])
     #
     ETA <- list(list(X = m_train, model = 'BayesB'))
