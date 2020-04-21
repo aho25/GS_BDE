@@ -27,6 +27,8 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
   ### Find the best individual from the population
   Population$G1$x_best <- which.max(Population$G1$Fitness)
   cat('1 generation best fitness =', Population$G1$Fitness[Population$G1$x_best], '\n')
+  cat('1 generation best fitness =', Population$G1$Fitness[Population$G1$x_best], '\n', 
+      file = paste0("results/", AnalyseName, "_Fithess_by_Generation.txt"), append = T)
   
   ### Count hamming based population diversity for initial population
   gtype <- vector()
@@ -44,6 +46,7 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
   
   for (G in 2:GENERATION) {
     cat(G, 'generation ')
+    cat(G, 'generation ', file = paste0("results/", AnalyseName, "_Fithess_by_Generation.txt"), append = T)
     Population[[paste0('G',G)]]$X <- matrix(nrow = NP, ncol = D)
     colnames(Population[[paste0('G',G)]]$X) <- feature_pool.names
     Population[[paste0('G',G)]]$Fitness <- vector(length = NP)
@@ -120,6 +123,8 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
     CR <- Population[[paste0('G',G)]]$gtype / Population$G1$gtype
     CR <- 1 - min(0.9, max(0.1, CR))
     cat('best fitness =', Population[[paste0('G',G)]]$Fitness[Population[[paste0('G',G)]]$x_best], '\n')
+    cat('best fitness =', Population[[paste0('G',G)]]$Fitness[Population[[paste0('G',G)]]$x_best], '\n', 
+        file = paste0("results/", AnalyseName, "_Fithess_by_Generation.txt"), append = T)
   }
   return(Population)
 }
