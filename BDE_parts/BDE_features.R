@@ -16,13 +16,13 @@ BDE_features <- function(PHENO, MARKERS, OFFSET) {
     ### Write feature_yield data by groups
     for (i in 1:nrow(MARKERS)) {
       if (MARKERS[i,j] < -OFFSET) {
-        Features[[feature_names[j]]]$yield$negative <- c(Features[[feature_names[j]]]$yield$negative, PHENO[i])
+        Features[[feature_names[j]]]$yield$negative <- c(Features[[feature_names[j]]]$yield$negative, PHENO[i,1])
         MARKERS[i,j] <- -1
       } else if (MARKERS[i,j] > OFFSET) {
-        Features[[feature_names[j]]]$yield$positive <- c(Features[[feature_names[j]]]$yield$positive, PHENO[i])
+        Features[[feature_names[j]]]$yield$positive <- c(Features[[feature_names[j]]]$yield$positive, PHENO[i,1])
         MARKERS[i,j] <- 1
       } else {
-        Features[[feature_names[j]]]$yield$null <- c(Features[[feature_names[j]]]$yield$null, PHENO[i])
+        Features[[feature_names[j]]]$yield$null <- c(Features[[feature_names[j]]]$yield$null, PHENO[i,1])
         MARKERS[i,j] <- 0
       }
     }
