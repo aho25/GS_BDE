@@ -1,0 +1,4 @@
+Trial Code = 
+Minimum MAF = 5
+Maximum Missing = 50
+MapSet = mapset:2014 HapMap
