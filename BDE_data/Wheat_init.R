@@ -21,20 +21,19 @@ Wheat_init <- function() {
   p <- ncol(markers)
   probedata <- sample(1:n, 0.8 * n)
   validata <- setdiff(1:n, probedata)
-  p.valid <- pheno[validata]
+  p.valid <- as.matrix(pheno[validata])
   m.valid <- markers[validata,]
-  p.probe <- pheno[probedata]
+  p.probe <- as.matrix(pheno[probedata])
   m.probe <- markers[probedata,]
-  
   
   # ### Check
   # set.seed(12)
   # m.rows = sample(n,300)
   # m.cols = sample(p,300)
+  # p.probe = as.matrix(pheno[m.rows])
   # m.probe = markers[m.rows,m.cols]
-  # p.probe = pheno[m.rows]
-  # MARKERS = m.probe
   # PHENO = p.probe
+  # MARKERS = m.probe
   
   Init_data <- list(p.valid=p.valid, m.valid=m.valid, p.probe=p.probe, m.probe=m.probe)
   return(Init_data)
