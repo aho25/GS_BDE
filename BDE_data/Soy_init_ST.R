@@ -52,19 +52,19 @@ Soy_init_ST <- function() {
   p <- ncol(Markers)
   probedata <- sample(1:n, 0.8 * n)
   validata <- setdiff(1:n, probedata)
-  p.valid <- Pheno[validata,]$yield
+  p.valid <- as.matrix(Pheno[validata,]$yield)
   m.valid <- Markers[validata,]
-  p.probe <- Pheno[probedata,]$yield
+  p.probe <- as.matrix(Pheno[probedata,]$yield)
   m.probe <- Markers[probedata,]
   
-  ### Check
-  set.seed(12)
-  m.rows = sample(n,300)
-  m.cols = sample(p,300)
-  m.probe = Markers[m.rows,m.cols]
-  p.probe = Pheno[m.rows,]$yield
-  MARKERS = m.probe
-  PHENO = p.probe
+  # ### Check
+  # set.seed(12)
+  # m.rows = sample(n,300)
+  # m.cols = sample(p,300)
+  # m.probe = Markers[m.rows,m.cols]
+  # p.probe = as.matrix(Pheno[m.rows,]$yield)
+  # MARKERS = m.probe
+  # PHENO = p.probe
   
   Init_data <- list(p.valid=p.valid, m.valid=m.valid, p.probe=p.probe, m.probe=m.probe)
   return(Init_data)
