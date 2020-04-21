@@ -1,5 +1,5 @@
 rm(list=ls())
-#bglr_mt + bglr_mt_valid with Soy_MT
+
 ### Load packages
 library(stats)
 library(parallel)
@@ -12,15 +12,15 @@ source("BDE_all/BDE_analyze.R")
 
 ### Load data
 DATA <- Soy_init_MT()
-
-### Set OBJFUNC and validation function parameters
+#bglr_mt + bglr_mt_valid with Soy_MT
+### Set OBJFUNC and validation function parameters  
 source("BDE_all/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_all/BDE_parameters.R")
 OBJFUNC <- gbs_bglr_mt
 VALIDFUNC <- gbs_bglr_mt_valid
-AnalyseName <- "bglr_mt_valid_with_Soy_MT"
+AnalyseName <- "bglr_mt_valid_Soy_MT"
 
 ### Start BDE ###
 start_time <- Sys.time()
