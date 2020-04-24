@@ -56,7 +56,7 @@ Soy_init_ST <- function() {
   m.valid <- Markers[validata,]
   p.probe <- as.matrix(Pheno[probedata,]$yield)
   m.probe <- Markers[probedata,]
-  
+  # 
   # ### Check
   # set.seed(12)
   # m.rows = sample(n,300)
