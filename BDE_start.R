@@ -9,18 +9,20 @@ source("BDE_parts/BDE_function.R")
 source("gbs_functions/gbs_source.R")
 source("BDE_data/data_source.R")
 source("BDE_all/BDE_analyze.R")
+#bme + mtm_valid with Soy_MT
 
+source("BDE_all/BDE_parameters.R")
 ### Load data
 DATA <- Soy_init_MT()
-#bglr_mt + bglr_mt_valid with Soy_MT
+
 ### Set OBJFUNC and validation function parameters  
 source("BDE_all/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
-source("BDE_all/BDE_parameters.R")
-OBJFUNC <- gbs_bglr_mt
-VALIDFUNC <- gbs_bglr_mt_valid
-AnalyseName <- "bglr_mt_valid_Soy_MT"
+
+OBJFUNC <- gbs_rrblup
+VALIDFUNC <- gbs_rrblup_valid
+AnalyseName <- "rrblup_Soy_ST"
 
 ### Start BDE ###
 start_time <- Sys.time()
