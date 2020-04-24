@@ -1,4 +1,4 @@
-BDE_analyze <- function(Population, GENERATION, OBJFUNC_Parameters, VALID_Parameters, AnalyseName, BDE_time) {
+BDE_analyze <- function(Population, GENERATION, OBJFUNC_Parameters, VALID_Parameters, BDE_Parameters, AnalyseName, BDE_time) {
   ### Best Fitness
   final_fitness.best <- Population[[paste0('G',GENERATION)]]$Fitness[Population[[paste0('G',GENERATION)]]$x_best]
   ### Final features

@@ -32,6 +32,6 @@ end_time <- Sys.time()
 BDE_time <- ceiling(end_time - start_time)
 
 ### Analyse ###
-BDE_analyze(Population, GENERATION, OBJFUNC_Parameters, VALID_Parameters, AnalyseName, BDE_time)
+BDE_analyze(Population, GENERATION, OBJFUNC_Parameters, VALID_Parameters, BDE_Parameters, AnalyseName, BDE_time)
   
 
