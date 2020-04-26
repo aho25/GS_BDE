@@ -10,8 +10,8 @@ Synthetic_data_ST <- function(OFFSET) {
   Markers <- gen.qa
   n <- nrow(Markers)
   p <- ncol(Markers)
-  m.rows = sample(n, 1000)
-  m.cols = sample(p, 1000)
+  m.rows = sample(n, 500)
+  m.cols = sample(p, 500)
   Markers = as.matrix(Markers[m.rows, m.cols])
   
   ### Data imputation
@@ -51,22 +51,22 @@ Synthetic_data_ST <- function(OFFSET) {
   
   ### Create PHENO ###
   set.seed(12)
-  x1 <- sort(runif(m.cols,-3, 3))
-  weight_1 <- dnorm(x1,1.5)
+  major_len_1 <- 20 #количество главных фич(влияют на результат(вариация по синтетическим данным))
+  major_ind_1 <- sample(length(m.cols), major_len_1)#samlper
+  weight_1 <- rnorm(length(m.cols), 3, 2)#from normal distribution, select random value 
+  weight_1[major_ind_1] <- weight_1[major_ind_1] + rnorm(major_len_1, 15, 2)#add normal distr to weight
+  names(weight_1) <- colnames(MARKERS)
+  major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
-  PHENO <- sapply(priznak_1, function(i) {
-    (max(priznak_1) - min(priznak_1)) / (max(priznak_1) + 1 - i)
-  })
+  PHENO <- priznak_1 + 2*abs(min(priznak_1))
+  # max(PHENO)
+  # min(PHENO)
+  # mean(PHENO)
+  # scale_1 <- 1
+  # PHENO <- PHENO * scale_1
   
-  n <- nrow(MARKERS)
   MARKERS <- as.data.frame(MARKERS)
   PHENO <- as.matrix(PHENO)
-  probedata <- sample(1:n, 0.8 * n)
-  validata <- setdiff(1:n, probedata)
-  m.probe <- MARKERS[probedata, ]
-  p.probe <- as.matrix(PHENO[probedata,])
-  m.valid <- MARKERS[validata, ]
-  p.valid <- as.matrix(PHENO[validata,])
-  Init_data <- list(p.valid=p.valid, m.valid=m.valid, p.probe=p.probe, m.probe=m.probe)
+  Init_data <- list(major_snp_1=major_snp_1, p.probe=PHENO, m.probe=MARKERS)
   return(Init_data)
 }

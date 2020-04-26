@@ -1,6 +1,6 @@
 source("BDE_parts/BDE_normalize.R")
-source("BDE_parts/BDE_optim_nonPar.R")
-source("BDE_parts/BDE_features.R")
+source("BDE_parts/BDE_optim_parallel.R")
+source("BDE_parts/BDE_features_parallel.R")
 source("BDE_parts/BDE_IG_16.R")
 #source("BDE_parts/BDE_CFS.R")
 
@@ -8,7 +8,7 @@ source("BDE_parts/BDE_IG_16.R")
 BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
   
   ############### Count feature scores by 3 groups ##################
-  Features <- BDE_features(PHENO, MARKERS, OFFSET)
+  Features <- BDE_features(PHENO, MARKERS, OFFSET, NUMCORES)
   feature_names <- colnames(MARKERS)
   
   ### Write scores in vectors
@@ -76,6 +76,6 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   ####### BDE ######
   set.seed(SEEDRNG)
   
-  Population <- BDE_optim_nonPar(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES)
+  Population <- BDE_optim(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES)
   return(Population)
 }

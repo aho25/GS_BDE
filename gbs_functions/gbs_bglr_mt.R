@@ -9,7 +9,7 @@ gbs_bglr_mt <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
   } else {
     splitdata <- split(order(runif(Markers.nRow))[-sample(Markers.nRow, Markers.nRow%%CROSSVAL)], 1:CROSSVAL)
   }
-  fitness <- mcmapply(function(i) {
+  fitness <- sapply(1:CROSSVAL, function(i) {
     pheno_train <- PHENO[-splitdata[[i]],]
     m_train <- as.matrix(MARKERS[-splitdata[[i]],])
     pheno_test <- PHENO[splitdata[[i]],]
@@ -32,6 +32,6 @@ gbs_bglr_mt <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
       cor(prod_predicted[,j], pheno_test[,j])
     })
     return(prod_accuracy[1])
-  }, 1:CROSSVAL)
+  })
   return(mean(fitness))
 }

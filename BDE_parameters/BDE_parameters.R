@@ -1,14 +1,14 @@
 ### Set BDE_parameters
-CROSSVAL <- 3
+CROSSVAL <- 5
 OFFSET <- 0.1
-NBASEFEAT <- 800
+NBASEFEAT <- 100
 CFSBEST <- 100 #isNotUsed
 NP <- 20
 GENERATION <- 15
 MUTFACTOR <- 0.3
 CR <- 0.5
 SEEDRNG <- 12
-NUMCORES <- detectCores(logical = F) #isNotUsed
+#NUMCORES <- detectCores() #isNotUsed
 #
 BDE_Parameters <- c(CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG)
 names(BDE_Parameters) <- c('CROSSVAL', 'OFFSET', 'NBASEFEAT', 'CFSBEST', 'NP', 'GENERATION', 'MUTFACTOR', 'CR', 'SEEDRNG')

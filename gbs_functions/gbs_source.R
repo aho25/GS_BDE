@@ -2,6 +2,7 @@
 source("gbs_functions/gbs_rrblup.R")
 source("gbs_functions/gbs_mtm.R")
 source("gbs_functions/gbs_bme.R")
+source("gbs_functions/gbs_bme_parallel.R")
 source("gbs_functions/gbs_bglr_st.R")
 source("gbs_functions/gbs_bglr_mt.R")
 

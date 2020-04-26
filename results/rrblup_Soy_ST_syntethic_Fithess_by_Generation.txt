@@ -1,8 +1,0 @@
-1 generation best fitness = 0.5962026 
-2 generation best fitness = 0.5962026 
-3 generation best fitness = 0.6235008 
-4 generation best fitness = 0.6235008 
-1 generation best fitness = 0.5966565 
-2 generation best fitness = 0.6175435 
-3 generation best fitness = 0.6259695 
-4 generation best fitness = 0.6259695 

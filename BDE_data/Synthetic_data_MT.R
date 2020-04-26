@@ -1,6 +1,6 @@
 library(SoyNAM)
 library(rrBLUP)
-
+#можно изменять ср и дисперсии
 Synthetic_data_MT <- function(OFFSET) {
   
   ### Init markers ###
@@ -51,52 +51,58 @@ Synthetic_data_MT <- function(OFFSET) {
   
   ### Create PHENO ###
   set.seed(12)
-  x1 <- sort(runif(m.cols,-3, 3))
-  weight_1 <- dnorm(x1)
+  major_len_1 <- 20
+  major_ind_1 <- sample(length(m.cols), major_len_1)
+  weight_1 <- rnorm(length(m.cols), 3, 2)
+  weight_1[major_ind_1] <- weight_1[major_ind_1] + rnorm(major_len_1, 15, 2)
+  names(weight_1) <- colnames(MARKERS)
+  major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
-  pheno_1 <- sapply(priznak_1, function(i) {
-    (max(priznak_1) - min(priznak_1)) / (max(priznak_1) + 1 - i)
-  })
+  pheno_1 <- priznak_1 + 2*abs(min(priznak_1))
+  # max(pheno_1)
+  # min(pheno_1)
+  # mean(pheno_1)
+  # scale_1 <- 1
+  # pheno_1 <- pheno_1 * scale_1
   
   ### Multi trait
-  x2 <- sort(runif(m.cols,-3, 1))
-  weight_2 <- dnorm(x2, 1, 1.5)
+  major_len_2 <- 40
+  major_ind_2 <- sample(length(m.cols), major_len_2)
+  weight_2 <- rnorm(length(m.cols), 2, 2)
+  weight_2[major_ind_2] <- weight_2[major_ind_2] + rnorm(major_len_2, 25, 4)
+  names(weight_2) <- colnames(MARKERS)
+  major_snp_2 <- names(sort(weight_2[major_ind_2]))
   priznak_2 <- MARKERS %*% weight_2
-  pheno_2 <- sapply(priznak_2, function(i) {
-    (max(priznak_2) - min(priznak_2)) / (max(priznak_2) + 1 - i)
-  })
-  #cor(pheno_1, pheno_2)
-  
-  ### Make pheno_2 correlated to pheno_1
-  ro_2 <- 0.3 #cor_coef
-  pheno_2 <- ro_2 * pheno_1 + sqrt(1 - ro_2 ^ 2) * pheno_2
-  #cor(pheno_1, pheno_2)
+  pheno_2 <- priznak_2 + 2*abs(min(priznak_2))
+  # max(pheno_2)
+  # min(pheno_2)
+  # mean(pheno_2)
+  scale_2 <- 0.05
+  pheno_2 <- pheno_2 * scale_2
+  #cor(pheno_1, pheno_2) #выяснить при каком значении корелляции, улучшается/ухудшается работа алгоритма МТ. 
   
   ### Pheno_3
-  x3 <- sort(runif(m.cols, -2, 4))
-  weight_3 <- dnorm(x3, -1, 1.5)
+  major_len_3 <- 10
+  major_ind_3 <- sample(length(m.cols), major_len_3)
+  weight_3 <- rnorm(length(m.cols), 1, 3)
+  weight_3[major_ind_3] <- weight_3[major_ind_3] + rnorm(major_len_3, 30, 5)
+  names(weight_3) <- colnames(MARKERS)
+  major_snp_3 <- names(sort(weight_3[major_ind_3]))
   priznak_3 <- MARKERS %*% weight_3
-  pheno_3 <- sapply(priznak_2, function(i) {
-    (max(priznak_2) - min(priznak_2)) / (max(priznak_2) + 1 - i)
-  })
-  #cor(pheno_1, pheno_3)
-  ro_3 <- 0.2 #cor_coef
-  pheno_3 <- ro_3 * pheno_1 + sqrt(1 - ro_3 ^ 2) * pheno_3
+  pheno_3 <- priznak_3 + 2*abs(min(priznak_3))
+  #max(pheno_3)
+  #min(pheno_3)
+  #mean(pheno_3)
+  scale_3 <- 0.2
+  pheno_3 <- pheno_3 * scale_3
   #cor(pheno_1, pheno_3)
   
   ### Concanate pheno
   PHENO <- cbind(pheno_1, pheno_2, pheno_3)
   colnames(PHENO) <- c('yield', 'pheno_2', 'pheno_3')
   
-  n <- nrow(MARKERS)
   MARKERS <- as.data.frame(MARKERS)
   PHENO <- as.matrix(PHENO)
-  probedata <- sample(1:n, 0.8 * n)
-  validata <- setdiff(1:n, probedata)
-  m.probe <- MARKERS[probedata, ]
-  p.probe <- as.matrix(PHENO[probedata, ])
-  m.valid <- MARKERS[validata, ]
-  p.valid <- as.matrix(PHENO[validata, ])
-  Init_data <- list(p.valid=p.valid, m.valid=m.valid, p.probe=p.probe, m.probe=m.probe)
+  Init_data <- list(major_snp_1=major_snp_1, major_snp_2=major_snp_2, major_snp_3=major_snp_3, p.probe=PHENO, m.probe=MARKERS)
   return(Init_data)
 }

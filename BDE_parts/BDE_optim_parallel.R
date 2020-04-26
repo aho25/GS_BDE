@@ -1,4 +1,4 @@
-BDE_optim_nonPar <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
+BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
   ### Create initial population - Generation == 1
   Population <- list()
   Population$G1$X <- matrix(nrow = NP, ncol = D)
@@ -16,13 +16,13 @@ BDE_optim_nonPar <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_featu
   
   ### Fitness evaluation ###
   Population$G1$Fitness <- vector(length = NP)
-  Population$G1$Fitness <- sapply(1:NP, function(i) {
+  Population$G1$Fitness <- mcmapply(function(i) {
     #	cat(i, 'iteration', '\n')
     feature_fit.idx <- which(Population$G1$X[i,] == 0)
     MARKERS.individual <- MARKERS.pool[,feature_fit.idx]
-    Population$G1$Fitness[i] <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, NUMCORES)
+    Population$G1$Fitness[i] <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG)
     return(Population$G1$Fitness[i])
-  })
+  }, 1:NP, mc.cores = NUMCORES)
   
   ### Find the best individual from the population
   Population$G1$x_best <- which.max(Population$G1$Fitness)
@@ -54,7 +54,7 @@ BDE_optim_nonPar <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_featu
     ### Count minimum change value - C_min
     C_min <- ceiling(13*(1 - (G-1)/GENERATION)) + 4
     
-    X_and_Fitness <- lapply(1:NP, function(i) {
+    X_and_Fitness <- mclapply(1:NP, function(i) {
       target <- Population[[paste0('G',G-1)]]$X[i,]
       ### Create binary mutation operator
       r1 <- sample(c(1:NP)[-i], 1)
@@ -92,7 +92,7 @@ BDE_optim_nonPar <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_featu
       ### Fitness evaluation ###
       feature_fit.idx <- which(Population[[paste0('G',G-1)]]$X[i,] == 0) # Features acting in fitness evaluation
       MARKERS.individual <- MARKERS.pool[,feature_fit.idx]
-      trial.fit <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, NUMCORES)
+      trial.fit <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG)
       
       ### Write best (target or trial) in the generation
       if (trial.fit > Population[[paste0('G',G-1)]]$Fitness[i]) {
@@ -100,7 +100,7 @@ BDE_optim_nonPar <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_featu
       } else {
         return(list(target, Population[[paste0('G',G-1)]]$Fitness[i]))
       }
-    })
+    }, mc.cores = NUMCORES)
     for (i in 1:NP) {
       Population[[paste0('G',G)]]$X[i,] <- X_and_Fitness[[i]][[1]]
       Population[[paste0('G',G)]]$Fitness[i] <- X_and_Fitness[[i]][[2]]

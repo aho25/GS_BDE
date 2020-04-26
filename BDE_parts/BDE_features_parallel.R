@@ -1,4 +1,4 @@
-BDE_features <- function(PHENO, MARKERS, OFFSET) {
+BDE_features <- function(PHENO, MARKERS, OFFSET, NUMCORES) {
   
   ### Create a list of Features
   feature_names <- colnames(MARKERS)
@@ -9,7 +9,7 @@ BDE_features <- function(PHENO, MARKERS, OFFSET) {
   feature_score_dimnames$score <- c('average_value', 'variance', 'standard_deviation', 'number_of_samples', 'Sum', 'sum_of_squares')
   feature_score_dimnames$groups <- c('negative', 'null', 'positive')
   
-  Features <- sapply(1:length(feature_names), function(j) {
+  Features <- mcmapply(function(j) {
     #	cat(j,feature_names[j], '\n')
     Features[[feature_names[j]]]$yield <- list(feature_score_dimnames$groups) #Form 3 groups of feature_yield data
     Features[[feature_names[j]]]$score <- matrix(data = NA, nrow = 6, ncol = 3, dimnames = feature_score_dimnames) #Form feature_score matrix
@@ -83,7 +83,7 @@ BDE_features <- function(PHENO, MARKERS, OFFSET) {
               Features[[feature_names[j]]]$score[4,2]*Features[[feature_names[j]]]$score[2,2]^2,
               Features[[feature_names[j]]]$score[4,3]*Features[[feature_names[j]]]$score[2,3]^2))
     return(Features)
-  })
+  }, 1:length(feature_names), mc.cores = NUMCORES)
   
   return(Features)
 }

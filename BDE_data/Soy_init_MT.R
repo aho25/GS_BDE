@@ -52,7 +52,7 @@ Soy_init_MT <- function() {
   colnames(Pheno_traits) <- c('yield', 'moisture', 'protein', 'oil', 'fiber', 'size')
   rownames(Pheno_traits) <- Pheno$strain
   cor(Pheno_traits)
-  Pheno_corTraits <- Pheno_traits[,-c(2)] #leave traits correlated with yield
+  Pheno_corTraits <- Pheno_traits[,-c(2,5,6)] #leave traits correlated with yield
   
   ### Initialize data
   n <- nrow(Markers)
@@ -64,15 +64,15 @@ Soy_init_MT <- function() {
   p.probe <- Pheno_corTraits[probedata,]
   m.probe <- Markers[probedata,]
   
-  ### Check
-  set.seed(12)
-  m.rows = sample(n,300)
-  m.cols = sample(p,300)
-  m.probe = Markers[m.rows,m.cols]
-  p.probe = Pheno_corTraits[m.rows,]
-  MARKERS = m.probe
-  PHENO = p.probe
-
+  # ### Check
+  # set.seed(12)
+  # m.rows = sample(n,300)
+  # m.cols = sample(p,300)
+  # m.probe = Markers[m.rows,m.cols]
+  # p.probe = Pheno_corTraits[m.rows,]
+  # MARKERS = m.probe
+  # PHENO = p.probe
+  
   Init_data <- list(p.valid=p.valid, m.valid=m.valid, p.probe=p.probe, m.probe=m.probe)
   return(Init_data)
 }
