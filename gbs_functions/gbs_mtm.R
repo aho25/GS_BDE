@@ -38,7 +38,7 @@ gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
               thin = OBJFUNC.ARGS$thin,
               saveAt = OBJFUNC.ARGS$saveAt
     )
-    #
+        #
     prod_accuracy <- sapply(1:nTraits, function(j) {
       cor(fm$YHat[splitdata[[i]],j], PHENO[splitdata[[i]],j])
     })

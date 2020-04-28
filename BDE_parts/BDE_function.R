@@ -13,34 +13,34 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   
   ### Write scores in vectors
   One_Way_ANOVA <- vector(length = length(feature_names))
-  Fisher_Score <- vector(length = length(feature_names))
+  Fisher_Score  <- vector(length = length(feature_names))
   for (j in 1:length(feature_names)) {
     One_Way_ANOVA[j] <- Features[[feature_names[j]]]$One_Way_ANOVA$F_value
-    Fisher_Score[j] <- Features[[feature_names[j]]]$Fisher_Score
+    Fisher_Score[j]  <- Features[[feature_names[j]]]$Fisher_Score
   }
-  names(Fisher_Score) <- feature_names
+  names(Fisher_Score)  <- feature_names
   names(One_Way_ANOVA) <- feature_names
   
   ### Compare One_Way_ANOVA & Fisher_Score results
   One_Way_ANOVA.sorted <- sort(One_Way_ANOVA[which(One_Way_ANOVA != 0)], decreasing = T)
-  Fisher_Score.sorted <- sort(Fisher_Score[which(Fisher_Score != 0)], decreasing = T)
+  Fisher_Score.sorted  <- sort(Fisher_Score[which(Fisher_Score != 0)], decreasing = T)
   #which(rank(-One_Way_ANOVA.sorted) <= 10)
   #which(rank(-Fisher_Score.sorted) <= 10)
   
   IG.FSelector.sorted_16 <- BDE_IG_16(PHENO, MARKERS)
   
   ### Leave NBASEFEAT best from each filter method
-  One_Way_ANOVA.best <- One_Way_ANOVA.sorted[1:NBASEFEAT]
-  One_Way_ANOVA.best <- One_Way_ANOVA.best[!is.na(One_Way_ANOVA.best)]
-  Fisher_Score.best <- Fisher_Score.sorted[1:NBASEFEAT]
-  Fisher_Score.best <- Fisher_Score.best[!is.na(Fisher_Score.best)]
+  One_Way_ANOVA.best   <- One_Way_ANOVA.sorted[1:NBASEFEAT]
+  One_Way_ANOVA.best   <- One_Way_ANOVA.best[!is.na(One_Way_ANOVA.best)]
+  Fisher_Score.best    <- Fisher_Score.sorted[1:NBASEFEAT]
+  Fisher_Score.best    <- Fisher_Score.best[!is.na(Fisher_Score.best)]
   IG.FSelector_16.best <- IG.FSelector.sorted_16[1:NBASEFEAT]
   IG.FSelector_16.best <- IG.FSelector_16.best[!is.na(IG.FSelector_16.best)]
   
   ### Count overlapping percentage between three filter methods
-  One_Way_ANOVA.best_VS_Fisher_Score.best <- length(which(names(One_Way_ANOVA.best) %in% names(Fisher_Score.best)))
+  One_Way_ANOVA.best_VS_Fisher_Score.best    <- length(which(names(One_Way_ANOVA.best) %in% names(Fisher_Score.best)))
   One_Way_ANOVA.best_VS_IG.FSelector_16.best <- length(which(names(One_Way_ANOVA.best) %in% names(IG.FSelector_16.best)))
-  Fisher_Score.best_VS_IG.FSelector_16.best <- length(which(names(Fisher_Score.best) %in% names(IG.FSelector_16.best)))
+  Fisher_Score.best_VS_IG.FSelector_16.best  <- length(which(names(Fisher_Score.best) %in% names(IG.FSelector_16.best)))
   
   ### Form feature pool
   feature_pool.names <- unique(c(names(One_Way_ANOVA.best), names(Fisher_Score.best), names(IG.FSelector_16.best)))
@@ -49,11 +49,11 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   #feature_pool.names <- BDE_CFS(PHENO, MARKERS, feature_pool.names, CFSBEST)
   
   ### Score normalization
-  One_Way_ANOVA.norm <- normalize(One_Way_ANOVA.sorted)
-  Fisher_Score.norm <- normalize(Fisher_Score.sorted)
+  One_Way_ANOVA.norm   <- normalize(One_Way_ANOVA.sorted)
+  Fisher_Score.norm    <- normalize(Fisher_Score.sorted)
   IG.FSelector_16.norm <- normalize(IG.FSelector.sorted_16)
   
-  ### Count probabilities of features
+  ### Count total score and probabilities of features
   One_Way_ANOVA.score <- One_Way_ANOVA.norm[feature_pool.names]
   One_Way_ANOVA.score[is.na(One_Way_ANOVA.score)] <- 0
   Fisher_Score.score <- Fisher_Score.norm[feature_pool.names]
