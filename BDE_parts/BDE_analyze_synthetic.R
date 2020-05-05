@@ -1,4 +1,4 @@
-library("heatmaply")
+library(heatmaply)
 BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time) {
   ### Best Fitness
   final_fitness.best <- Population[[paste0('G',GENERATION)]]$Fitness[Population[[paste0('G',GENERATION)]]$x_best]
@@ -27,7 +27,7 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
   correct_final_features.rate <- correct_final_features.length / length(final_features.names) #количество правильных к количеству предсказанных
   cat('\n correct_final_features.rate =', correct_final_features.rate, '\n')
   error_final_features.length <- length(final_features.names) - correct_final_features.length #ошибочнo предсказанных
-  error_final_features.rate <- error_final_features.length / length(final_features.names) 
+  error_final_features.rate <- error_final_features.length / length(final_features.names)
   cat('error_final_features.rate =', error_final_features.rate, '\n')
   caught_final_features.length <- correct_final_features.length
   caught_final_features.rate <- caught_final_features.length / length(DATA$major_snp_1)
@@ -35,11 +35,8 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
   lost_final_features.length <- length(DATA$major_snp_1) - caught_final_features.length
   lost_final_features.rate <- lost_final_features.length / length(DATA$major_snp_1)
   cat('lost_final_features.rate =', lost_final_features.rate, '\n')
-  final_features.MR <- matrix(data = c(correct_final_features.length, 
-                                       lost_final_features.length, 
-                                       error_final_features.length,
-                                       (ncol(DATA$m.probe) - correct_final_features.length - lost_final_features.length - error_final_features.length)), 
-                              ncol = 2)
+  final_features.MR <- matrix(data = c(correct_final_features.length, lost_final_features.length, error_final_features.length,
+                                       (ncol(DATA$m.probe) - correct_final_features.length - lost_final_features.length - error_final_features.length)), ncol = 2)
   colnames(final_features.MR) <- c("Major", "Rest")
   rownames(final_features.MR) <- c("Major", "Rest")
   final_heat.MR <- heatmaply(final_features.MR, dendrogram = "none", hide_colorbar = T, draw_cellnote = T, colors = rainbow(100, alpha = 0.75, start = 0, end = 0.15, rev = T),
@@ -49,11 +46,11 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
                              file = paste0("results/", AnalyseName, "_final_heat.MR.html"))
   
   ### Best features in G1 rate
-  correct_features_in_G1.length <- length(which(final_features.names %in% DATA$major_snp_1))
-  correct_features_in_G1.rate <- correct_features_in_G1.length / length(final_features.names)
+  correct_features_in_G1.length <- length(which(best_features_in_G1.names %in% DATA$major_snp_1))
+  correct_features_in_G1.rate <- correct_features_in_G1.length / length(best_features_in_G1.names)
   cat('\n correct_features_in_G1.rate =', correct_features_in_G1.rate, '\n')
-  error_features_in_G1.length <- length(final_features.names) - correct_features_in_G1.length
-  error_features_in_G1.rate <- error_features_in_G1.length / length(final_features.names)
+  error_features_in_G1.length <- length(best_features_in_G1.names) - correct_features_in_G1.length
+  error_features_in_G1.rate <- error_features_in_G1.length / length(best_features_in_G1.names)
   cat('error_features_in_G1.rate =', error_features_in_G1.rate, '\n')
   caught_features_in_G1.length <- correct_features_in_G1.length
   caught_features_in_G1.rate <- caught_features_in_G1.length / length(DATA$major_snp_1)

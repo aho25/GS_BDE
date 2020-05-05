@@ -58,7 +58,7 @@ Synthetic_data_MT <- function(OFFSET) {
   names(weight_1) <- colnames(MARKERS)
   major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
-  pheno_1 <- priznak_1 + 2*abs(min(priznak_1))
+  pheno_1 <- priznak_1 + 2*abs(min(priznak_1)) + rnorm(m.rows, 0, 10)
   # max(pheno_1)
   # min(pheno_1)
   # mean(pheno_1)
@@ -73,7 +73,7 @@ Synthetic_data_MT <- function(OFFSET) {
   names(weight_2) <- colnames(MARKERS)
   major_snp_2 <- names(sort(weight_2[major_ind_2]))
   priznak_2 <- MARKERS %*% weight_2
-  pheno_2 <- priznak_2 + 2*abs(min(priznak_2))
+  pheno_2 <- priznak_2 + 2*abs(min(priznak_2)) + rnorm(m.rows, 0, 10)
   # max(pheno_2)
   # min(pheno_2)
   # mean(pheno_2)
@@ -89,7 +89,7 @@ Synthetic_data_MT <- function(OFFSET) {
   names(weight_3) <- colnames(MARKERS)
   major_snp_3 <- names(sort(weight_3[major_ind_3]))
   priznak_3 <- MARKERS %*% weight_3
-  pheno_3 <- priznak_3 + 2*abs(min(priznak_3))
+  pheno_3 <- priznak_3 + 2*abs(min(priznak_3)) + rnorm(m.rows, 0, 10)
   #max(pheno_3)
   #min(pheno_3)
   #mean(pheno_3)

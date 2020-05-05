@@ -1,5 +1,5 @@
 rm(list=ls())
-#mtm + mtm_valid with Soy_MT
+
 ### Load packages
 library(stats)
 library(parallel)
@@ -9,7 +9,7 @@ source("BDE_parts/BDE_function.R")
 source("gbs_functions/gbs_source.R")
 source("BDE_data/data_source.R")
 source("BDE_parts/BDE_analyze_synthetic.R")
-
+#bme + mtm_valid with Soy_MT
 
 ### Set OBJFUNC and validation function parameters  
 source("BDE_parameters/BDE_OBJFUNC_parameters.R")
@@ -17,7 +17,7 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
 OBJFUNC <- gbs_mtm
-AnalyseName <- "mtm_synthetic_data..."
+AnalyseName <- "mtm_synthetic_..."
 
 ### Load data
 DATA <- Synthetic_data_MT(OFFSET)
@@ -34,5 +34,5 @@ BDE_time <- ceiling(end_time - start_time)
 Heat <- BDE_analyze(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time)
 Heat$best_in_G1_heat.MR
 Heat$final_heat.MR
-  
+
 

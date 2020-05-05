@@ -15,11 +15,11 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters_parallel.R")
-OBJFUNC <- gbs_bglr_mt
-AnalyseName <- "bglr_mt_synth.."
+OBJFUNC <- gbs_rrblup
+AnalyseName <- "rrblup_st_synth.."
 
 ### Load data
-DATA <- Synthetic_data_MT(OFFSET)
+DATA <- Synthetic_data_ST(OFFSET)
 
 ### Start BDE ###
 start_time <- Sys.time()

@@ -1,0 +1,15 @@
+1 generation best fitness = 0.9429681 
+2 generation best fitness = 0.9458214 
+3 generation best fitness = 0.9479394 
+4 generation best fitness = 0.9479394 
+5 generation best fitness = 0.9479394 
+6 generation best fitness = 0.9479394 
+7 generation best fitness = 0.9479394 
+8 generation best fitness = 0.9479394 
+9 generation best fitness = 0.9479394 
+10 generation best fitness = 0.9479394 
+11 generation best fitness = 0.9479394 
+12 generation best fitness = 0.9479394 
+13 generation best fitness = 0.9479394 
+14 generation best fitness = 0.9479394 
+15 generation best fitness = 0.9479394 
