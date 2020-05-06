@@ -52,13 +52,14 @@ Synthetic_data_ST <- function(OFFSET) {
   ### Create PHENO ###
   set.seed(12)
   major_len_1 <- 30  #количество главных фич(влияют на результат(вариация по синтетическим данным))
-  major_ind_1 <- sample(length(m.cols), major_len_1)#samlper
+  major_ind_1 <- sample(length(m.cols), major_len_1)
   weight_1 <- rnorm(length(m.cols), 0, 1)#from normal distribution, select random value 
   weight_1[major_ind_1] <- weight_1[major_ind_1] + rnorm(major_len_1, 10, 2)#add normal distr to weight
   names(weight_1) <- colnames(MARKERS)
   major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
-  PHENO <- priznak_1 + 2*abs(min(priznak_1)) + runif(m.rows)*rnorm(m.rows, 0, 1)
+  PHENO <- priznak_1 + 2*abs(min(priznak_1))
+  PHENO <- PHENO + runif(m.rows)*rnorm(m.rows, 0, 1)
   max(PHENO)
   min(PHENO)
   mean(PHENO)
