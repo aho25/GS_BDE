@@ -59,7 +59,7 @@ Synthetic_data_ST <- function(OFFSET) {
   major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
   PHENO <- priznak_1 + 2*abs(min(priznak_1))
-  PHENO <- PHENO + runif(m.rows)*rnorm(m.rows, 0, 1)
+  PHENO <- PHENO + runif(m.rows)*rnorm(m.rows,mean(PHENO)/10, 1)
   max(PHENO)
   min(PHENO)
   mean(PHENO)
