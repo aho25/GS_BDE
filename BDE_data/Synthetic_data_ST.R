@@ -54,7 +54,7 @@ Synthetic_data_ST <- function(OFFSET) {
   major_len_1 <- 30  #количество главных фич(влияют на результат(вариация по синтетическим данным))
   major_ind_1 <- sample(length(m.cols), major_len_1)
   weight_1 <- rnorm(length(m.cols), 0, 1)#from normal distribution, select random value 
-  weight_1[major_ind_1] <- weight_1[major_ind_1] + rnorm(major_len_1, 10, 2)#add normal distr to weight
+  weight_1[major_ind_1] <- weight_1[major_ind_1] #add normal distr to weight
   names(weight_1) <- colnames(MARKERS)
   major_snp_1 <- names(sort(weight_1[major_ind_1]))
   priznak_1 <- MARKERS %*% weight_1
