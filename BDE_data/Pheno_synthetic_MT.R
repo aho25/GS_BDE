@@ -36,7 +36,7 @@ names(weight_2) <- colnames(MARKERS)
 major_snp_2 <- names(sort(weight_2[major_ind_2]))
 priznak_2 <- as.vector(crossprod(t(MARKERS),weight_2))
 PHENO2 <- priznak_2 + 2*abs(min(priznak_2))
-PHENO2 <- PHENO2 + rnorm(nrow(MARKERS), 0, mean(PHENO2)*0.1)
+PHENO2 <- PHENO2 + rnorm(nrow(MARKERS), 0,  1)*mean(PHENO2)*0.1
 # max(PHENO2)
 # min(PHENO2)
 # mean(PHENO2)
@@ -49,12 +49,12 @@ write.csv(major_snp_2, file = 'data_csv/major_snp2_synthetic_mt_01.csv')
 major_len_3 <- 15
 major_ind_3 <- sample(ncol(MARKERS), major_len_3)
 weight_3 <- rnorm(ncol(MARKERS), 1, 3)
-weight_3[major_ind_3] <- weight_3[major_ind_3] + rnorm(major_len_3, 30, 5)
+weight_3[major_ind_3] <- weight_3[major_ind_3] + rnorm(major_len_3, 30, 5)#вес главных снипов
 names(weight_3) <- colnames(MARKERS)
 major_snp_3 <- names(sort(weight_3[major_ind_3]))
 priznak_3 <- as.vector(crossprod(t(MARKERS),weight_3))
 PHENO3 <- priznak_3 + 2*abs(min(priznak_3))
-PHENO3 <- PHENO3 + rnorm(nrow(MARKERS), 0, mean(PHENO3)*0.1)
+PHENO3 <- PHENO3 + rnorm(nrow(MARKERS), 0, 1)*mean(PHENO3)*0.1# для приближения к району данных. вопрос. как привязываться масштабам данных если дисперсия 1. лучше наверное  
 # max(PHENO3)
 # min(PHENO3)
 # mean(PHENO3)
