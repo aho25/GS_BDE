@@ -33,7 +33,6 @@ BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseN
       features_in_G1_freq[f.ind] <- features_in_G1_freq[f.ind] + 1
     }
   }
-<<<<<<< HEAD
   best_features_in_G1.names <- vector()
   count <- 0
   while (length(best_features_in_G1.names) < 40) {
@@ -49,7 +48,6 @@ BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseN
   correct_final_features.rate <- correct_final_features.length / length(final_features.names)
   cat('\n correct_final_features.rate =', correct_final_features.rate, '\n')
   error_final_features.length <- length(final_features.names) - correct_final_features.length
-=======
   png(paste0("results/", AnalyseName, "_Fithess_by_Generation.png"))
   plot(Fitness_best, type = 'b', col = 'blue', xlab = 'Generation', ylab = 'Fitness', main = 'Improvement of prediction \n by generations')
   dev.off()
@@ -59,7 +57,6 @@ BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseN
   correct_final_features.rate <- correct_final_features.length / length(final_features.names) #количество правильных к количеству предсказанных
   cat('\n correct_final_features.rate =', correct_final_features.rate, '\n')
   error_final_features.length <- length(final_features.names) - correct_final_features.length #ошибочнo предсказанных
->>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
   error_final_features.rate <- error_final_features.length / length(final_features.names)
   cat('error_final_features.rate =', error_final_features.rate, '\n')
   caught_final_features.length <- correct_final_features.length
@@ -103,14 +100,13 @@ BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseN
   
   ### Write BDE_Result ###
   BDE_time_print <- capture.output(BDE_time)
-<<<<<<< HEAD
   BDE_Result <- as.data.frame(c(final_fitness.best, final_features.length, correct_final_features.rate, error_final_features.rate, caught_final_features.rate, 
                                 lost_final_features.rate, best_features_in_G1.length, correct_features_in_G1.rate, error_features_in_G1.rate, 
                                 caught_features_in_G1.rate, lost_features_in_G1.rate, BDE_time_print, 'BDE Parameters:', BDE_Parameters, 
                                 'OBJ_FUNC Parameters:', OBJFUNC_Parameters), optional = T)
   row.names(BDE_Result) <- c('final_fitness.best', 'final_features.length', 'correct_final_features.rate', 
                              'error_final_features.rate','caught_final_features.rate', 'lost_final_features.rate', 'best_features_in_G1.length', 
-=======
+
   BDE_Result <- as.data.frame(c(final_fitness.best, final_features.length, correct_final_features.rate, error_final_features.rate,
                                 caught_final_features.rate, lost_final_features.rate, best_features_in_G1.length, 
                                 correct_features_in_G1.rate, error_features_in_G1.rate, caught_features_in_G1.rate, 
@@ -119,7 +115,6 @@ BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseN
                                 OBJFUNC_Parameters), optional = T)
   row.names(BDE_Result) <- c('final_fitness.best', 'final_features.length', 'correct_final_features.rate', 'error_final_features.rate',
                              'caught_final_features.rate', 'lost_final_features.rate', 'best_features_in_G1.length', 
->>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
                              'correct_features_in_G1.rate', 'error_features_in_G1.rate', 'caught_features_in_G1.rate', 
                              'lost_features_in_G1.rate', 'BDE_time', '###', names(BDE_Parameters), '####', names(OBJFUNC_Parameters))
   write.table(BDE_Result, file = paste0("results/", AnalyseName, "_BDE_Result.txt"), col.names = F)
