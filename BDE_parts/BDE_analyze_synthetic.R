@@ -1,23 +1,55 @@
 library(heatmaply)
-BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time) {
-  ### Best Fitness
-  final_fitness.best <- Population[[paste0('G',GENERATION)]]$Fitness[Population[[paste0('G',GENERATION)]]$x_best]
-  ### Final features
-  final_features.names <- colnames(Population[[paste0('G',GENERATION)]]$X[,which(Population[[paste0('G',GENERATION)]]$X[Population[[paste0('G',GENERATION)]]$x_best,] == 0)])
-  final_features.length <- length(final_features.names)
-  cat('final_features.length =', final_features.length, '\n')
-  ### Best features in first generation
-  best_features_in_G1.names <- colnames(Population$G1$X[,which(Population$G1$X[Population$G1$x_best,] == 0)])
-  best_features_in_G1.length <- length(best_features_in_G1.names)
-  cat('best_features_in_G1.length =', best_features_in_G1.length, '\n')
-  ### Number of coincidences of feautures in first and last Generartion
-  final_features_VS_best_features_in_G1 <- length(which(final_features.names %in% best_features_in_G1.names))
-  cat('final_features_VS_best_features_in_G1 =', final_features_VS_best_features_in_G1, '\n')
-  ### Plot best Fitness by Generations
-  Fitness_best <- vector(length = GENERATION)
-  for (G in 1:GENERATION) {
-    Fitness_best[G] <- Population[[paste0('G',G)]]$Fitness[Population[[paste0('G',G)]]$x_best]
+BDE_analyze <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time) {
+  ### Find frequent features
+  final_features_unique <- vector()
+  features_in_G1_unique <- vector()
+  for (p in 1:length(Pops$final_features)) {
+    final_features_unique <- c(final_features_unique, Pops$final_features[[p]])
+    features_in_G1_unique <- c(features_in_G1_unique, Pops$features_in_G1[[p]])
   }
+  final_features_unique <- unique(final_features_unique)
+  final_features_freq <- rep.int(0, length(final_features_unique))
+  names(final_features_freq) <- final_features_unique
+  for (population in Pops$final_features) {
+    for (feature in population) {
+      f.ind <- which(final_features_unique == feature) 
+      final_features_freq[f.ind] <- final_features_freq[f.ind] + 1
+    }
+  }
+  final_features.names <- vector()
+  count <- 0
+  while (length(final_features.names) < 40) {
+    final_features.names <- c(final_features.names, final_features_unique[which(final_features_freq == length(Pops$final_features)-count)])
+	count<-count+1
+  }
+  final_features.length <- length(final_features.names)
+  #
+  features_in_G1_unique <- unique(features_in_G1_unique)
+  features_in_G1_freq <- rep.int(0, length(features_in_G1_unique))
+  names(features_in_G1_freq) <- features_in_G1_unique
+  for (population in Pops$features_in_G1) {
+    for (feature in population) {
+      f.ind <- which(features_in_G1_unique == feature)
+      features_in_G1_freq[f.ind] <- features_in_G1_freq[f.ind] + 1
+    }
+  }
+<<<<<<< HEAD
+  best_features_in_G1.names <- vector()
+  count <- 0
+  while (length(best_features_in_G1.names) < 40) {
+    best_features_in_G1.names <- c(best_features_in_G1.names, features_in_G1_unique[which(features_in_G1_freq == length(Pops$features_in_G1)-count)])
+	count<-count+1
+  }
+  best_features_in_G1.length <- length(best_features_in_G1.names)
+  #
+  final_fitness.best <- mean(Pops$final_fitness)
+  
+  ### Final features rate
+  correct_final_features.length <- length(which(final_features.names %in% DATA$major_snp_1))
+  correct_final_features.rate <- correct_final_features.length / length(final_features.names)
+  cat('\n correct_final_features.rate =', correct_final_features.rate, '\n')
+  error_final_features.length <- length(final_features.names) - correct_final_features.length
+=======
   png(paste0("results/", AnalyseName, "_Fithess_by_Generation.png"))
   plot(Fitness_best, type = 'b', col = 'blue', xlab = 'Generation', ylab = 'Fitness', main = 'Improvement of prediction \n by generations')
   dev.off()
@@ -27,6 +59,7 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
   correct_final_features.rate <- correct_final_features.length / length(final_features.names) #количество правильных к количеству предсказанных
   cat('\n correct_final_features.rate =', correct_final_features.rate, '\n')
   error_final_features.length <- length(final_features.names) - correct_final_features.length #ошибочнo предсказанных
+>>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
   error_final_features.rate <- error_final_features.length / length(final_features.names)
   cat('error_final_features.rate =', error_final_features.rate, '\n')
   caught_final_features.length <- correct_final_features.length
@@ -70,6 +103,14 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
   
   ### Write BDE_Result ###
   BDE_time_print <- capture.output(BDE_time)
+<<<<<<< HEAD
+  BDE_Result <- as.data.frame(c(final_fitness.best, final_features.length, correct_final_features.rate, error_final_features.rate, caught_final_features.rate, 
+                                lost_final_features.rate, best_features_in_G1.length, correct_features_in_G1.rate, error_features_in_G1.rate, 
+                                caught_features_in_G1.rate, lost_features_in_G1.rate, BDE_time_print, 'BDE Parameters:', BDE_Parameters, 
+                                'OBJ_FUNC Parameters:', OBJFUNC_Parameters), optional = T)
+  row.names(BDE_Result) <- c('final_fitness.best', 'final_features.length', 'correct_final_features.rate', 
+                             'error_final_features.rate','caught_final_features.rate', 'lost_final_features.rate', 'best_features_in_G1.length', 
+=======
   BDE_Result <- as.data.frame(c(final_fitness.best, final_features.length, correct_final_features.rate, error_final_features.rate,
                                 caught_final_features.rate, lost_final_features.rate, best_features_in_G1.length, 
                                 correct_features_in_G1.rate, error_features_in_G1.rate, caught_features_in_G1.rate, 
@@ -78,9 +119,13 @@ BDE_analyze <- function(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Pa
                                 OBJFUNC_Parameters), optional = T)
   row.names(BDE_Result) <- c('final_fitness.best', 'final_features.length', 'correct_final_features.rate', 'error_final_features.rate',
                              'caught_final_features.rate', 'lost_final_features.rate', 'best_features_in_G1.length', 
+>>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
                              'correct_features_in_G1.rate', 'error_features_in_G1.rate', 'caught_features_in_G1.rate', 
-                             'lost_features_in_G1.rate', 'final_features_VS_best_features_in_G1',
-                             'BDE_time', '###', names(BDE_Parameters), '####', names(OBJFUNC_Parameters))
+                             'lost_features_in_G1.rate', 'BDE_time', '###', names(BDE_Parameters), '####', names(OBJFUNC_Parameters))
   write.table(BDE_Result, file = paste0("results/", AnalyseName, "_BDE_Result.txt"), col.names = F)
+  
+  write.csv(final_features.names, file = paste0("results/", AnalyseName, "_final_features_BDE.csv"))
+  write.csv(best_features_in_G1.names, file = paste0("results/", AnalyseName, "_best_features_in_G1_BDE.csv"))
+  
   return(list(final_heat.MR=final_heat.MR, best_in_G1_heat.MR=best_in_G1_heat.MR))
 }
