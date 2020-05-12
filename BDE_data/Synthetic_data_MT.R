@@ -6,6 +6,15 @@ Synthetic_data_MT <- function(OFFSET) {
   ### Init markers ###
   data(soybase)
   
+<<<<<<< HEAD
+  ### Load PHENO ###
+  PHENO <- read.csv('data_csv/pheno_synthetic_mt_001.csv')#data to change
+  PHENO <- PHENO[,-1]
+  row.names(PHENO) <- row.names(MARKERS)
+  
+  major_snp_1 <- read.csv('data_csv/major_snp1_synthetic_mt_001.csv')#data to change
+  major_snp_1 <- as.vector(major_snp_1[,-1])
+=======
   set.seed(12)
   Markers <- gen.qa
   n <- nrow(Markers)
@@ -100,6 +109,7 @@ Synthetic_data_MT <- function(OFFSET) {
   ### Concanate pheno
   PHENO <- cbind(pheno_1, pheno_2, pheno_3)
   colnames(PHENO) <- c('yield', 'pheno_2', 'pheno_3')
+>>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
   
   MARKERS <- as.data.frame(MARKERS)
   PHENO <- as.matrix(PHENO)

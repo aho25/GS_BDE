@@ -6,6 +6,12 @@ Synthetic_data_ST <- function(OFFSET) {
   ### Init markers ###
   data(soybase)
   
+<<<<<<< HEAD
+  ### Load PHENO ###
+  PHENO <- read.csv('data_csv/pheno_synthetic.csv') #rnorm data set
+  PHENO <- PHENO[,-1]
+  names(PHENO) <- rownames(MARKERS)
+=======
   set.seed(12)
   Markers <- gen.qa
   n <- nrow(Markers)
@@ -13,6 +19,7 @@ Synthetic_data_ST <- function(OFFSET) {
   m.rows = sample(n, 500)
   m.cols = sample(p, 500)
   Markers = as.matrix(Markers[m.rows, m.cols])
+>>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
   
   ### Data imputation
   Markers[Markers == 0] <- -1
