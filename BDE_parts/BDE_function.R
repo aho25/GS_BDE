@@ -74,7 +74,7 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   }
   
   ####### BDE ######
-  set.seed(SEEDRNG)
+  #set.seed(SEEDRNG)
   
   Population <- BDE_optim(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS)
   return(Population)
