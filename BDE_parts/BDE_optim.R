@@ -1,3 +1,4 @@
+#optimization after filter method
 BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
   ### Create initial population - Generation == 1
   Population <- list()
@@ -18,7 +19,7 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
   Population$G1$Fitness <- vector(length = NP)
   Population$G1$Fitness <- mcmapply(function(i) {
     #	cat(i, 'iteration', '\n')
-    feature_fit.idx <- which(Population$G1$X[i,] == 0)
+    feature_fit.idx <- which(Population$G1$X[i,] == 0)# column index of features used in algorithm 
     MARKERS.individual <- MARKERS.pool[,feature_fit.idx]
     Population$G1$Fitness[i] <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG)
     return(Population$G1$Fitness[i])
