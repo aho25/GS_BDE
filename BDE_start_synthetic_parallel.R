@@ -22,15 +22,24 @@ AnalyseName <- "rrblup_st_synth.."
 DATA <- Synthetic_data_ST(OFFSET)
 
 ### Start BDE ###
+Pops <- list()
 start_time <- Sys.time()
-system.time(
-  Population <- BDE(DATA$p.probe, DATA$m.probe, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES)
-)
+for (p in 1:5) {
+  capture.output(Population <- BDE(DATA$p.probe, DATA$m.probe, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES),
+                 file = 'temp/Population')
+  cat('Population', p, 'done\n')
+  ### Final features
+  Pops$final_features[[p]] <- colnames(Population[[paste0('G',GENERATION)]]$X[,which(Population[[paste0('G',GENERATION)]]$X[Population[[paste0('G',GENERATION)]]$x_best,] == 0)])
+  ### Best features in first generation
+  Pops$features_in_G1[[p]] <- colnames(Population$G1$X[,which(Population$G1$X[Population$G1$x_best,] == 0)])
+  ### Best Fitness
+  Pops$final_fitness[p] <- Population[[paste0('G',GENERATION)]]$Fitness[Population[[paste0('G',GENERATION)]]$x_best]
+}
 end_time <- Sys.time()
 BDE_time <- ceiling(end_time - start_time)
 
 ### Analyse ###
-Heat <- BDE_analyze(DATA, Population, GENERATION, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time)
+Heat <- BDE_analyze(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time)
 Heat$best_in_G1_heat.MR
 Heat$final_heat.MR
 
