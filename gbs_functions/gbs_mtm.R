@@ -12,7 +12,7 @@ gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
   }
   fitness <- sapply(1:CROSSVAL, function(i) {
     Y <- PHENO
-    Y[splitdata[[i]],] <- NA
+    Y[splitdata[[i]],1] <- NA
     A <- A.mat(as.matrix(MARKERS))
     #
     Rand_effects <- list(
@@ -38,7 +38,7 @@ gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
               thin = OBJFUNC.ARGS$thin,
               saveAt = OBJFUNC.ARGS$saveAt
     )
-    #
+      #
     prod_accuracy <- sapply(1:nTraits, function(j) {
       cor(fm$YHat[splitdata[[i]],j], PHENO[splitdata[[i]],j])
     })

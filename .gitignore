@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-download_LRQW
-temp
-data_csv
+temp/**/*.*
+data_csv/**/*.*
+
+download_LRQW/**/*.*
+results/**/*.*

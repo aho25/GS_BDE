@@ -15,8 +15,8 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
-OBJFUNC <- gbs_rrblup
-AnalyseName <- "rrblup_synthetic_..."
+OBJFUNC <- gbs_mtm
+AnalyseName <- "mtm_synthetic_..."
 
 ### Load data
 DATA <- Synthetic_data_ST2()

@@ -1,80 +1,22 @@
-library(SoyNAM)
-library(rrBLUP)
-
-Synthetic_data_ST <- function(OFFSET) {
+Synthetic_data_ST <- function() {
   
-  ### Init markers ###
-  data(soybase)
+  ### Load MARKERS ###
+  MARKERS <- read.csv('data_csv/markers_synthetic.csv')
+  rownames(MARKERS) <- MARKERS[,1]
+  MARKERS <- MARKERS[,-1]
   
-<<<<<<< HEAD
   ### Load PHENO ###
   PHENO <- read.csv('data_csv/pheno_synthetic.csv') #rnorm data set
   PHENO <- PHENO[,-1]
   names(PHENO) <- rownames(MARKERS)
-=======
-  set.seed(12)
-  Markers <- gen.qa
-  n <- nrow(Markers)
-  p <- ncol(Markers)
-  m.rows = sample(n, 500)
-  m.cols = sample(p, 500)
-  Markers = as.matrix(Markers[m.rows, m.cols])
->>>>>>> parent of 33a3ed4... Syn data update, complete data sets + results
   
-  ### Data imputation
-  Markers[Markers == 0] <- -1
-  Markers[Markers == 1] <- 0
-  Markers[Markers == 2] <- 1
-  impute <-
-    A.mat(
-      Markers,
-      min.MAF = 0.05,
-      max.missing = 0.5,
-      impute.method = "mean",
-      return.imputed = T
-    )
-  MARKERS <- as.data.frame(impute$imputed)
-  dim(MARKERS)
-  
-  ### Truncate data
-  n <- nrow(MARKERS)
-  p <- ncol(MARKERS)
-  m.rows = sample(n, 300)
-  m.cols = sample(p, 300)
-  MARKERS = as.matrix(MARKERS[m.rows, m.cols])
-  
-  ### Make MARKERS == -1, 0, 1
-  for (j in 1:ncol(MARKERS)) {
-    for (i in 1:nrow(MARKERS)) {
-      if (MARKERS[i, j] < -OFFSET) {
-        MARKERS[i, j] <- -1
-      } else if (MARKERS[i, j] > OFFSET) {
-        MARKERS[i, j] <- 1
-      } else {
-        MARKERS[i, j] <- 0
-      }
-    }
-  }
-  
-  ### Create PHENO ###
-  set.seed(12)
-  major_len_1 <- 30  #количество главных фич(влияют на результат(вариация по синтетическим данным))
-  major_ind_1 <- sample(length(m.cols), major_len_1)
-  weight_1 <- rnorm(length(m.cols), 0, 1)#from normal distribution, select random value 
-  weight_1[major_ind_1] <- weight_1[major_ind_1] #add normal distr to weight
+  weight_1 <- read.csv('data_csv/weight1_synthetic.csv')
+  weight_1 <- weight_1[,-1]
   names(weight_1) <- colnames(MARKERS)
-  major_snp_1 <- names(sort(weight_1[major_ind_1]))
-  priznak_1 <- MARKERS %*% weight_1
-  PHENO <- priznak_1 + 2*abs(min(priznak_1))
-  PHENO <- PHENO + runif(m.rows)*rnorm(m.rows,mean(PHENO)/10, 1)
-  max(PHENO)
-  min(PHENO)
-  mean(PHENO)
-  scale_1 <- 1
-  PHENO <- PHENO * scale_1
   
   MARKERS <- as.data.frame(MARKERS)
   PHENO <- as.matrix(PHENO)
-  Init_data <- list(major_snp_1=major_snp_1, p.probe=PHENO, m.probe=MARKERS)
+  
+  Init_data <- list(p.probe=PHENO, m.probe=MARKERS, weight=weight_1)
   return(Init_data)
 }
