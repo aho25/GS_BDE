@@ -10,7 +10,7 @@ source("gbs_functions/gbs_source.R")
 source("BDE_data/data_source.R")
 source("BDE_parts/BDE_analyze_synthetic.R")
 
-### Set OBJFUNC and validation function parameters  
+### Set OBJFUNC and validation function parameters
 source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
@@ -19,7 +19,7 @@ OBJFUNC <- gbs_rrblup
 AnalyseName <- "rrblup_st_synth.."
 
 ### Load data
-DATA <- Synthetic_data_ST(OFFSET)
+DATA <- Synthetic_data_ST2()
 
 ### Start BDE ###
 Pops <- list()
@@ -43,4 +43,6 @@ Heat <- BDE_analyze(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseName,
 Heat$best_in_G1_heat.MR
 Heat$final_heat.MR
 
+# prod_model <- mixed.solve(PHENO_TRAIN[,1], Z = MARKERS_TRAIN, K = NULL, SE = FALSE, return.Hinv = FALSE)
+# prod_g <- prod_model$u
 

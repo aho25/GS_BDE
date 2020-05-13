@@ -20,7 +20,7 @@ VALIDFUNC <- gbs_rrblup_valid
 AnalyseName <- "rrblup_synthetic_par2...."
 
 ### Load data
-DATA <- Synthetic_data_MT(OFFSET)
+DATA <- Soy_init_ST()
 
 ### Start BDE ###
 start_time <- Sys.time()

@@ -15,12 +15,14 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
-OBJFUNC <- gbs_mtm
+OBJFUNC <- gbs_bglr_st
 AnalyseName <- "mtm_synthetic_..."
 
 ### Load data
 DATA <- Synthetic_data_ST2()
 
+
+set.seed(SEEDRNG)
 ### Start BDE ###
 Pops <- list()
 start_time <- Sys.time()
