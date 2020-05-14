@@ -13,15 +13,15 @@ names(weight_1) <- colnames(MARKERS)
 major_snp_1 <- names(sort(weight_1[major_ind_1], decreasing = T))
 priznak_1 <- as.vector(crossprod(t(MARKERS),weight_1))
 PHENO <- priznak_1 + 2*abs(min(priznak_1))
-PHENO <- PHENO + rnorm(nrow(MARKERS), 0, mean(PHENO)*0.1)#create datasets with different variance (0.01; 0.1 )
+PHENO <- PHENO + rnorm(nrow(MARKERS), 0, 1)*0.09#create datasets with different variance (0.01; 0.1 )
 # max(PHENO)
 # min(PHENO)
 # mean(PHENO)
 # scale_1 <- 1
 # PHENO <- PHENO * scale_1
 
-write.csv(PHENO, file = 'data_csv/pheno2_synthetic_st_01.csv')
-write.csv(major_snp_1, file = 'data_csv/major_snp1_synthetic_st_01.csv')
+write.csv(PHENO, file = 'data_csv/pheno2_synthetic_st_009.csv')
+write.csv(major_snp_1, file = 'data_csv/major_snp1_synthetic_st_009.csv')
 
 # #predict marker effects
 # ans <- mixed.solve(PHENO,Z=MARKERS)
