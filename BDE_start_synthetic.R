@@ -16,7 +16,7 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
 OBJFUNC <- gbs_bglr_st
-AnalyseName <- "mtm_synthetic_..."
+AnalyseName <- "bglr_st_002"
 
 ### Load data
 DATA <- Synthetic_data_ST2()

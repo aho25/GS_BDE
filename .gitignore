@@ -6,4 +6,9 @@ temp/**/*.*
 data_csv/**/*.*
 
 download_LRQW/**/*.*
-results/**/*.*
+results/*.*
+temp/*.*
+data_csv/*.*
+
+download_LRQW/*.*
+results/*.*
