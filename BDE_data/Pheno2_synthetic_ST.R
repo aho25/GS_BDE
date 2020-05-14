@@ -7,13 +7,13 @@ MARKERS <- MARKERS[,-1]
 set.seed(12)
 major_len_1 <- 20
 major_ind_1 <- sample(ncol(MARKERS), major_len_1)
-weight_1 <- rnorm(ncol(MARKERS), 0, 0.1)
+weight_1 <- rep(0,ncol(MARKERS))
 weight_1[major_ind_1] <- weight_1[major_ind_1] + rnorm(major_len_1, 10, 1)#is variance can makes a difference to results?
 names(weight_1) <- colnames(MARKERS)
 major_snp_1 <- names(sort(weight_1[major_ind_1], decreasing = T))
 priznak_1 <- as.vector(crossprod(t(MARKERS),weight_1))
 PHENO <- priznak_1 + 2*abs(min(priznak_1))
-PHENO <- PHENO + rnorm(nrow(MARKERS), 0, 1)*0.1#create datasets with different variance (0.01; 0.1 )
+PHENO <- PHENO + rnorm(nrow(MARKERS), 0, 1)*mean(PHENO)*0.1#create datasets with different variance (0.01; 0.1 )
 # max(PHENO)
 # min(PHENO)
 # mean(PHENO)
