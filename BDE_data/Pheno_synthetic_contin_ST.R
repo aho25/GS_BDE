@@ -1,5 +1,6 @@
+##pheno_synthetic генерит данные и веса из нормального распределения
 ### Download markers
-MARKERS <- read.csv('BDE_data/markers_synthetic.csv')
+MARKERS <- read.csv('data_csv/synthetic/markers_synthetic.csv')
 rownames(MARKERS) <- MARKERS[,1]
 MARKERS <- MARKERS[,-1]
 
@@ -13,10 +14,5 @@ PHENO <- g + rnorm(400,mean=0,sd=sqrt((1-h2)/h2*var(g)))
 names(PHENO) <- rownames(MARKERS)
 names(weight_1) <- colnames(MARKERS)
 
-write.csv(PHENO, file = 'data_csv/pheno_synthetic_st.csv')
-write.csv(weight_1, file = 'data_csv/weight1_synthetic_st.csv')
-
-# #predict marker effects
-# ans <- mixed.solve(PHENO,Z=MARKERS)
-# #By default K = I
-# accuracy <- cor(weight_1,ans$u)
+write.csv(PHENO, file = 'data_csv/synthetic/pheno_synthetic_contin_st.csv')
+write.csv(weight_1, file = 'data_csv/synthetic/weight_1_synthetic_contin_st.csv')
