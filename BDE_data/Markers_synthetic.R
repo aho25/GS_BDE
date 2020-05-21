@@ -47,4 +47,4 @@ for (j in 1:ncol(MARKERS)) {
     }
   }
 }
-write.csv(MARKERS, file = 'data_csv/markers_synthetic.csv')
+write.csv(MARKERS, file = 'data_csv/synthetic/markers_synthetic.csv')

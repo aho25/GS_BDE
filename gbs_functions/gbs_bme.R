@@ -11,7 +11,7 @@ gbs_bme <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
   Y <- as.matrix(PHENO)
   #
   pheno <- data.frame(GID = row.names(PHENO), Response = PHENO$yield)
-  CrossV <- CV.KFold(pheno, DataSetID = 'GID', K = CROSSVAL, set_seed = SEEDRNG)
+  CrossV <- CV.KFold(pheno, DataSetID = 'GID', K = CROSSVAL)
   #
   pm <- BME(Y = Y, Z1 = Z.G, nIter = OBJFUNC.ARGS$nIter, burnIn = OBJFUNC.ARGS$burnIn, thin = OBJFUNC.ARGS$thin, bs = OBJFUNC.ARGS$bs, testingSet = CrossV)
   #
