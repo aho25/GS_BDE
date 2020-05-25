@@ -87,7 +87,7 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
       }
       ### Modification of the trial vector with C_min
       modif <- sample(1:D, C_min)
-      trial[modif[j]] <- abs(trial[modif[j]] - 1)
+      trial[modif] <- abs(trial[modif] - 1)
       
       ### Fitness evaluation ###
       feature_fit.idx <- which(Population[[paste0('G',G-1)]]$X[i,] == 0) # Features acting in fitness evaluation

@@ -17,9 +17,9 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
-OBJFUNC <- gbs_rrblup
-AnalyseName <- "rrblup_01"
-k <- 0.1 # Choose noise coefficient
+OBJFUNC <- gbs_bglr_st
+AnalyseName <- "bglr_006"
+k <- 0.06 # Choose noise coefficient
 
 ### Load data
 DATA <- Synthetic_data_ST(k)
@@ -57,4 +57,4 @@ BDE_analyze_cor_2(DATA, Accuracy_set, GENERATION, Heat, AnalyseName)
 
 Heat$best_in_G1_heat.MR
 Heat$final_heat.MR
-
+    

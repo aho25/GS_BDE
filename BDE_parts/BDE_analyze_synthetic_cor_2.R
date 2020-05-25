@@ -9,7 +9,7 @@ BDE_analyze_cor_2 <- function(DATA, Accuracy_set, GENERATION, Heat, AnalyseName)
   accuracy_ref <- cor(DATA$weight_1, prod_model$u) # Control_1 - marker effects correlation
   # 
   prod_g <- prod_model$u
-  prod_mu <- prod_model$beta[1]
+  prod_mu <- prod_model$beta[1]#смещение регрессии
   prod_predicted <- prod_mu + as.matrix(DATA$m.probe) %*% prod_g#predicted pheno
   prod_accuracy_ref <- cor(prod_predicted, DATA$p.probe) # Control_2 - pheno correlation
   
