@@ -1,6 +1,6 @@
 #pheno2_syntetic
 ### Set noise coefficient
-k <- 0.2
+k <- 0.1
 
 ### Download markers
 MARKERS <- read.csv('data_csv/synthetic/markers_synthetic.csv')
@@ -18,6 +18,7 @@ major_snp_1 <- names(sort(weight_1[major_ind_1], decreasing = T))
 priznak_1 <- as.vector(crossprod(t(MARKERS),weight_1))
 PHENO <- priznak_1
 PHENO <- PHENO + rnorm(nrow(MARKERS), 0, 1)*k
+
 # max(PHENO)
 # min(PHENO)
 # mean(PHENO)

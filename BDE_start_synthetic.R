@@ -17,8 +17,8 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
 source("BDE_parameters/BDE_parameters.R")
-OBJFUNC <- gbs_bglr_st
-AnalyseName <- "bglr_006"
+OBJFUNC <- gbs_rrblup
+AnalyseName <- "rr_006"
 k <- 0.06 # Choose noise coefficient
 
 ### Load data

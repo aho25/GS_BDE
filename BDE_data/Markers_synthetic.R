@@ -31,7 +31,7 @@ dim(MARKERS)
 ### Truncate data
 n <- nrow(MARKERS)
 p <- ncol(MARKERS)
-m.rows = sample(n, 400)
+m.rows = sample(n, 100)
 m.cols = sample(p, 400)
 MARKERS = as.matrix(MARKERS[m.rows, m.cols])
 

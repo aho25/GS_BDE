@@ -32,8 +32,10 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   ### Leave NBASEFEAT best from each filter method
   One_Way_ANOVA.best <- One_Way_ANOVA.sorted[1:NBASEFEAT]
   One_Way_ANOVA.best <- One_Way_ANOVA.best[!is.na(One_Way_ANOVA.best)]
+  
   Fisher_Score.best <- Fisher_Score.sorted[1:NBASEFEAT]
   Fisher_Score.best <- Fisher_Score.best[!is.na(Fisher_Score.best)]
+ 
   IG.FSelector_16.best <- IG.FSelector.sorted_16[1:NBASEFEAT]
   IG.FSelector_16.best <- IG.FSelector_16.best[!is.na(IG.FSelector_16.best)]
   
@@ -52,6 +54,11 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   One_Way_ANOVA.norm <- normalize(One_Way_ANOVA.sorted)
   Fisher_Score.norm <- normalize(Fisher_Score.sorted)
   IG.FSelector_16.norm <- normalize(IG.FSelector.sorted_16)
+  write.csv(Fisher_Score.norm, file = paste0("filter/", AnalyseName,"_Fisher_score.csv"))
+  write.csv(One_Way_ANOVA.norm, file = paste0("filter/", AnalyseName,"_One_Way_ANOVA.csv"))
+  write.csv(IG.FSelector_16.norm, file = paste0("filter/", AnalyseName,"_IG_Fselector.csv"))
+  
+  
   
   ### Count probabilities of features
   One_Way_ANOVA.score <- One_Way_ANOVA.norm[feature_pool.names]
