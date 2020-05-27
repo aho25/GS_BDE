@@ -104,5 +104,7 @@ BDE_analyze_heat <- function(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, Ana
   write.table(BDE_Result, file = paste0("results/", AnalyseName, "_BDE_Result.txt"), col.names = F)
   write.csv(final_features.names, file = paste0("results/", AnalyseName, "_final_features_BDE.csv"))
   write.csv(best_features_in_G1.names, file = paste0("results/", AnalyseName, "_best_features_in_G1_BDE.csv"))
+  write.csv(sort(final_features_freq, decreasing = T), file = paste0("results/", AnalyseName, "_final_features_freq_BDE.csv"))
+  write.csv(sort(features_in_G1_freq, decreasing = T), file = paste0("results/", AnalyseName, "_best_features_in_G1_freq_BDE.csv"))
   return(list(final_heat.MR=final_heat.MR, best_in_G1_heat.MR=best_in_G1_heat.MR, final_features=final_features.names, best_features_in_G1=best_features_in_G1.names))
 }
