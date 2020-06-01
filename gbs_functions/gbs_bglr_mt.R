@@ -1,7 +1,7 @@
 library(BGLR)
 
 ### Define OBJFFUNC for Multitrait Fitness calculation
-gbs_bglr_mt <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
+gbs_bglr_mt <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, LMD) {
   nTraits <- ncol(PHENO)
   Markers.nRow <- nrow(MARKERS)
   if (length(sample(Markers.nRow, Markers.nRow%%CROSSVAL)) == 0) {
@@ -33,5 +33,5 @@ gbs_bglr_mt <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
     })
     return(prod_accuracy[1])
   })
-  return(mean(fitness))
+  return(mean(fitness)*(1 - LMD*ncol(MARKERS)))
 }

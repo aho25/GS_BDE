@@ -32,5 +32,3 @@ BDE_time <- ceiling(end_time - start_time)
 
 ### Analyse ###
 BDE_analyze(DATA, Population, GENERATION, OBJFUNC_Parameters, VALID_Parameters, BDE_Parameters, AnalyseName, BDE_time)
-
-

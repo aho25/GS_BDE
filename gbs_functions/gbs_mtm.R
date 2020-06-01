@@ -2,7 +2,7 @@ library(MTM)
 library(rrBLUP)
 
 ### Define OBJFFUNC for Multitrait Fitness calculation
-gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
+gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, LMD) {
   nTraits <- ncol(PHENO)
   Markers.nRow <- nrow(MARKERS)
   if (length(sample(Markers.nRow, Markers.nRow%%CROSSVAL)) == 0) {
@@ -38,11 +38,11 @@ gbs_mtm <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
               thin = OBJFUNC.ARGS$thin,
               saveAt = OBJFUNC.ARGS$saveAt
     )
-      #
+    #
     prod_accuracy <- sapply(1:nTraits, function(j) {
       cor(fm$YHat[splitdata[[i]],j], PHENO[splitdata[[i]],j])
     })
     return(prod_accuracy[1])
   })
-  return(mean(fitness))
+  return(mean(fitness)*(1 - LMD*ncol(MARKERS)))
 }

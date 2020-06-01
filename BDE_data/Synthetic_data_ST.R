@@ -1,4 +1,3 @@
-#data_ST2()
 Synthetic_data_ST <- function(k) {
 
   ### Load MARKERS ###

@@ -1,7 +1,7 @@
 library(rrBLUP)
 
 ### Define OBJFFUNC for Fitness calculation
-gbs_rrblup <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
+gbs_rrblup <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, LMD) {
   Markers.nRow <- nrow(MARKERS)
   if (length(sample(Markers.nRow, Markers.nRow%%CROSSVAL)) == 0) {
     splitdata <- split(order(runif(Markers.nRow)), 1:CROSSVAL)
@@ -21,5 +21,5 @@ gbs_rrblup <- function(PHENO, MARKERS, OBJFUNC.ARGS, CROSSVAL, SEEDRNG) {
     prod_accuracy <- cor(prod_predicted, pheno_test)
     return(prod_accuracy)
   })
-  return(mean(fitness))
+  return(mean(fitness)*(1 - LMD*ncol(MARKERS)))
 }

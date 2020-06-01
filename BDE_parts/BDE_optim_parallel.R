@@ -1,4 +1,4 @@
-BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
+BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, LMD, NUMCORES) {
   ### Create initial population - Generation == 1
   Population <- list()
   Population$G1$X <- matrix(nrow = NP, ncol = D)
@@ -20,7 +20,7 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
     #	cat(i, 'iteration', '\n')
     feature_fit.idx <- which(Population$G1$X[i,] == 0)
     MARKERS.individual <- MARKERS.pool[,feature_fit.idx]
-    Population$G1$Fitness[i] <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG)
+    Population$G1$Fitness[i] <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, LMD)
     return(Population$G1$Fitness[i])
   }, 1:NP, mc.cores = NUMCORES)
   
@@ -92,7 +92,7 @@ BDE_optim <- function(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, 
       ### Fitness evaluation ###
       feature_fit.idx <- which(Population[[paste0('G',G-1)]]$X[i,] == 0) # Features acting in fitness evaluation
       MARKERS.individual <- MARKERS.pool[,feature_fit.idx]
-      trial.fit <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG)
+      trial.fit <- OBJFUNC(PHENO, MARKERS.individual, OBJFUNC.ARGS, CROSSVAL, SEEDRNG, LMD)
       
       ### Write best (target or trial) in the generation
       if (trial.fit > Population[[paste0('G',G-1)]]$Fitness[i]) {

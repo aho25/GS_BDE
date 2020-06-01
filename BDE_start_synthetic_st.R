@@ -5,24 +5,25 @@ library(stats)
 library(parallel)
 
 ### Source scripts
-source("BDE_parts/BDE_function_parallel.R")
+source("BDE_parts/BDE_function.R")
 source("gbs_functions/gbs_source.R")
 source("BDE_data/data_source.R")
 source("BDE_parts/BDE_analyze_synthetic_heat.R")
 source("BDE_parts/BDE_analyze_synthetic_cor_1.R")
 source("BDE_parts/BDE_analyze_synthetic_cor_2.R")
 
-### Set OBJFUNC and validation function parameters
+### Set OBJFUNC and validation function parameters  
 source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 
 ### Set BDE_parameters
-source("BDE_parameters/BDE_parameters_parallel.R")
+source("BDE_parameters/BDE_parameters.R")
 OBJFUNC <- gbs_rrblup
 AnalyseName <- "rrblup_01"
-k <- 0.1 # Choose noise coefficient
+k <- 1 # Choose noise coefficient
 
 ### Load data
 DATA <- Synthetic_data_ST(k)
+LMD <- LMD_CENT/ncol(DATA$m.probe)
 
 set.seed(SEEDRNG)
 ### Start BDE ###
@@ -30,7 +31,7 @@ Accuracy_set <- list()
 Pops <- list()
 start_time <- Sys.time()
 for (p in 1:5) {
-  capture.output(Population <- BDE(DATA$p.probe, DATA$m.probe, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES),
+  capture.output(Population <- BDE(DATA$p.probe, DATA$m.probe, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, LMD),
                  file = 'temp/Population')
   cat('Population', p, 'done\n')
   
@@ -53,7 +54,8 @@ BDE_time <- ceiling(end_time - start_time)
 
 ### Analyse ###
 Heat <- BDE_analyze_heat(DATA, Pops, OBJFUNC_Parameters, BDE_Parameters, AnalyseName, BDE_time)
-BDE_analyze_cor_2(DATA, Accuracy_set, GENERATION, Heat)
+BDE_analyze_cor_2(DATA, Accuracy_set, GENERATION, Heat, AnalyseName)
 
 Heat$best_in_G1_heat.MR
 Heat$final_heat.MR
+

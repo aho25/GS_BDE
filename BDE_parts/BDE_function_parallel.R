@@ -5,7 +5,7 @@ source("BDE_parts/BDE_IG_16.R")
 #source("BDE_parts/BDE_CFS.R")
 
 ### Define BDE Algorithm
-BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES) {
+BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, LMD, NUMCORES) {
   
   ############### Count feature scores by 3 groups ##################
   Features <- BDE_features(PHENO, MARKERS, OFFSET, NUMCORES)
@@ -74,6 +74,6 @@ BDE <- function(PHENO, MARKERS, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERA
   }
   
   ####### BDE ######
-  Population <- BDE_optim(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, NUMCORES)
+  Population <- BDE_optim(PHENO, MARKERS.pool, feature_pool.names, p_of_feature, D, CROSSVAL, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, LMD, NUMCORES)
   return(Population)
 }
