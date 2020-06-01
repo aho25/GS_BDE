@@ -4,16 +4,16 @@ BDE_analyze_cor_2 <- function(DATA, Accuracy_set, GENERATION, Heat, AnalyseName)
   colnames(control) <- c('G1', paste0('G',GENERATION), 'rrBLUP', 'first_set', 'final_set')
   rownames(control) <- c('mean_marker_cor', 'sd_marker_cor', 'mean_pheno_cor', 'sd_pheno_cor')
   
-  ### Reference correlations
+  ### Reference correlations# Корелляция с использованием всех фич в регрессии
   prod_model <- mixed.solve(DATA$p.probe[,1], Z=DATA$m.probe)
   accuracy_ref <- cor(DATA$weight_1, prod_model$u) # Control_1 - marker effects correlation
   # 
   prod_g <- prod_model$u
-  prod_mu <- prod_model$beta[1]
-  prod_predicted <- prod_mu + as.matrix(DATA$m.probe) %*% prod_g
+  prod_mu <- prod_model$beta[1]#смещение регрессии
+  prod_predicted <- prod_mu + as.matrix(DATA$m.probe) %*% prod_g#predicted pheno
   prod_accuracy_ref <- cor(prod_predicted, DATA$p.probe[,1]) # Control_2 - pheno correlation
   
-  ### Hit final features correlations
+  ### Hit final features correlations# КОР-и на основании фич, по которым строится heatmap
   prod_model <- mixed.solve(DATA$p.probe[,1], Z=DATA$m.probe[,Heat$final_features])
   weight_1_pred <- rep(0, ncol(DATA$m.probe))
   names(weight_1_pred) <- colnames(DATA$m.probe)

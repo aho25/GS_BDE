@@ -12,8 +12,8 @@ BDE_analyze_cor_1 <- function(DATA, Population) {
   weight_1_pred[final_features.names] <- prod_model$u
   accuracy_final <- as.vector(cor(DATA$weight_1, weight_1_pred)) # Control_1 - marker effects correlation
   # 
-  prod_g <- prod_model$u
-  prod_mu <- prod_model$beta[1]
+  prod_g <- prod_model$u #prod_g -веса фич
+  prod_mu <- prod_model$beta[1] #prod_mu(BiaS) смещение регрессии
   prod_predicted <- prod_mu + as.matrix(DATA$m.probe[,final_features.names]) %*% prod_g
   prod_accuracy_final <- as.vector(cor(prod_predicted, DATA$p.probe[,1])) # Control_2 - pheno correlation
   
