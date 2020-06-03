@@ -31,8 +31,8 @@ dim(MARKERS)
 ### Truncate data
 n <- nrow(MARKERS)
 p <- ncol(MARKERS)
-m.rows = sample(n, 100)
-m.cols = sample(p, 400)
+m.rows = sample(n, 250)
+m.cols = sample(p, 500)
 MARKERS = as.matrix(MARKERS[m.rows, m.cols])
 
 ### Make MARKERS == -1, 0, 1
@@ -48,3 +48,4 @@ for (j in 1:ncol(MARKERS)) {
   }
 }
 write.csv(MARKERS, file = 'data_csv/synthetic/markers_synthetic.csv')
+

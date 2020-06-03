@@ -14,8 +14,8 @@ BDE_analyze_cor_1 <- function(DATA, Population) {
   # 
   prod_g <- prod_model$u #prod_g -веса фич
   prod_mu <- prod_model$beta[1] #prod_mu(BiaS) смещение регрессии
-  prod_predicted <- prod_mu + as.matrix(DATA$m.probe[,final_features.names]) %*% prod_g
-  prod_accuracy_final <- as.vector(cor(prod_predicted, DATA$p.probe[,1])) # Control_2 - pheno correlation
+  prod_predicted <- prod_mu + as.matrix(DATA$m.valid[,final_features.names]) %*% prod_g
+  prod_accuracy_final <- as.vector(cor(prod_predicted, DATA$p.valid[,1])) # Control_2 - pheno correlation
   
   ### Correlations_first_generation
   prod_model <- mixed.solve(DATA$p.probe[,1], Z=DATA$m.probe[,features_in_G1.names])
@@ -26,8 +26,8 @@ BDE_analyze_cor_1 <- function(DATA, Population) {
   # 
   prod_g <- prod_model$u
   prod_mu <- prod_model$beta[1]
-  prod_predicted <- prod_mu + as.matrix(DATA$m.probe[,features_in_G1.names]) %*% prod_g
-  prod_accuracy_first <- as.vector(cor(prod_predicted, DATA$p.probe[,1])) # Control_2 - pheno correlation
+  prod_predicted <- prod_mu + as.matrix(DATA$m.valid[,features_in_G1.names]) %*% prod_g
+  prod_accuracy_first <- as.vector(cor(prod_predicted, DATA$p.valid[,1])) # Control_2 - pheno correlation
   
   return(list(accuracy_final=accuracy_final, prod_accuracy_final=prod_accuracy_final, accuracy_first=accuracy_first, prod_accuracy_first=prod_accuracy_first))
 }

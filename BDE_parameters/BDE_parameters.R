@@ -1,7 +1,7 @@
 ### Set BDE_parameters
 CROSSVAL <- 5
 OFFSET <- 0.1
-NBASEFEAT <- 400
+NBASEFEAT <- 390
 CFSBEST <- 100 #isNotUsed
 NP <- 20
 GENERATION <- 15

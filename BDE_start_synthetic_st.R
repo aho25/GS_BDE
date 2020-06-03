@@ -19,7 +19,7 @@ source("BDE_parameters/BDE_OBJFUNC_parameters.R")
 source("BDE_parameters/BDE_parameters.R")
 OBJFUNC <- gbs_rrblup
 AnalyseName <- "rrblup_01"
-k <- 1 # Choose noise coefficient
+k <- 5 # Choose noise coefficient
 
 ### Load data
 DATA <- Synthetic_data_ST(k)
@@ -30,7 +30,7 @@ set.seed(SEEDRNG)
 Accuracy_set <- list()
 Pops <- list()
 start_time <- Sys.time()
-for (p in 1:5) {
+for (p in 1:6) {
   capture.output(Population <- BDE(DATA$p.probe, DATA$m.probe, CROSSVAL, OFFSET, NBASEFEAT, CFSBEST, NP, GENERATION, MUTFACTOR, CR, SEEDRNG, OBJFUNC, OBJFUNC.ARGS, LMD),
                  file = 'temp/Population')
   cat('Population', p, 'done\n')
